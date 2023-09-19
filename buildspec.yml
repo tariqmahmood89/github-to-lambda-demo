@@ -3,7 +3,7 @@ env:
   variables:
     FUNCTION_NAME: github-to-lambda-demo
     LAMBDA_PACKAGE: deployment-package.zip
-    SSM_NAME: Tesing
+    SSM_NAME: Testing
 phases:
   install:
     runtime-versions:
