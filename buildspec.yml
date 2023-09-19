@@ -1,4 +1,8 @@
 version: 0.2
+env:
+  variables:
+    FUNCTION_NAME: github-to-lambda-demo
+    LAMBDA_PACKAGE: deployment-package.zip
 phases:
   install:
     runtime-versions:
@@ -10,11 +14,12 @@ phases:
     commands:
       - echo "Zipping deployment package..."
       - cd lib
-      - zip -r9 ../deployment_package.zip .
+      - zip -r9 ../$LAMBDA_PACKAGE .
       - cd ..
-      - zip -g deployment_package.zip lambda_function.py
+      - zip -g $LAMBDA_PACKAGE lambda_function.py
   post_build:
     commands:
       - echo "Updating lambda Function..."
-      - aws lambda update-function-code --function-name github-to-lambda-demo --zip-file fileb://deployment_package.zip
+      - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$LAMBDA_PACKAGE
+      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --environment Variables=$(cat variables.json)
       - echo "DONE!!"
