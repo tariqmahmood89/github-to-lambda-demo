@@ -1,5 +1,5 @@
 {
-        "VAR_A": "test",
-        "VAR_B": "testing",
-        "VAR_C": "testing2"
+        "VAR_A"= "test",
+        "VAR_B"= "testing",
+        "VAR_C"= "testing2"
     }
