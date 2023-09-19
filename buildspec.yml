@@ -21,6 +21,6 @@ phases:
     commands:
       - echo "Updating lambda Function..."
       #- json_data=$(aws ssm get-parameter --name Testing)
-      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --environment "{\"Variables\":`aws ssm get-parameter --name Testing`}"
+      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --environment "{\"Variables\":`aws ssm get-parameter --name Testing --query 'Parameter.Value' --output text`}"
       - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$LAMBDA_PACKAGE
       - echo "DONE!!"
