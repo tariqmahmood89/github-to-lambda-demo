@@ -20,6 +20,7 @@ phases:
   post_build:
     commands:
       - echo "Updating lambda Function..."
-      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --environment "{\"Variables\":`cat variable.json`}"
+      - json_data=$(aws ssm get-parameter --name testing)
+      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --environment "{\"Variables\":`echo $json_data`}"
       - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$LAMBDA_PACKAGE
       - echo "DONE!!"
