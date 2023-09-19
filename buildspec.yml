@@ -21,5 +21,6 @@ phases:
     commands:
       - echo "Updating lambda Function..."
       - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$LAMBDA_PACKAGE
+      - echo FUNCTION_NAME
       - aws lambda update-function-configuration --function-name $FUNCTION_NAME --environment "Variables=$(cat variables.json)"
       - echo "DONE!!"
