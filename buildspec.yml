@@ -3,6 +3,7 @@ env:
   variables:
     FUNCTION_NAME: github-to-lambda-demo
     LAMBDA_PACKAGE: deployment-package.zip
+    SSM_NAME: Tesing
 phases:
   install:
     runtime-versions:
@@ -20,7 +21,7 @@ phases:
   post_build:
     commands:
       - echo "Updating lambda Function..."
-      #- json_data=$(aws ssm get-parameter --name Testing)
-      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --environment "{\"Variables\":`aws ssm get-parameter --name Testing --query 'Parameter.Value' --output text`}"
+      - json_data=$(aws ssm get-parameter --name $SSM_NAME --query 'Parameter.Value' --output text)
+      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --environment "{\"Variables\":`echo $json_data`}"
       - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$LAMBDA_PACKAGE
       - echo "DONE!!"
